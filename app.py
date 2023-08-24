@@ -47,7 +47,7 @@ def get_openai_feedback(file):
     response = openai.Completion.create(
         engine="text-davinci-003",
         prompt=prompt,
-        max_tokens=150
+        max_tokens=250
     )
     return response.choices[0].text
 
