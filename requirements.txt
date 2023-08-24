@@ -2,3 +2,8 @@ streamlit
 pandas
 openpyxl
 openai
+scipy
+scikit-learn
+nltk
+opencv-python
+
