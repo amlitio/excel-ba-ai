@@ -13,10 +13,21 @@ def review_excel(file):
 
 def check_formulas(file):
     # Check for formula errors in the Excel file
-    workbook = px.load_workbook(file)
+    workbook = px.load_workbook(file, data_only=False)
     sheet = workbook.active
     feedback = []
-    # Example: Check for specific formulas and provide feedback
+    # Check for specific formulas and provide feedback
+    for row in sheet.iter_rows():
+        for cell in row:
+            if cell.value and isinstance(cell.value, str) and cell.value.startswith("="):
+                formula = cell.value[1:]
+                if "SUM" in formula:
+                    feedback.append(f"Cell {cell.coordinate} contains a SUM formula: {formula}. Ensure the correct range is selected.")
+                elif "AVERAGE" in formula:
+                    feedback.append(f"Cell {cell.coordinate} contains an AVERAGE formula: {formula}. Ensure the correct range is selected.")
+                elif "VLOOKUP" in formula:
+                    feedback.append(f"Cell {cell.coordinate} contains a VLOOKUP formula: {formula}. Verify the lookup value and table array.")
+                # Add more specific checks as needed
     return feedback
 
 def suggest_python_integration(file):
